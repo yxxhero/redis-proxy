@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-var readcmd = []string{"get"}
+var readcmd = []string{"GET", "EXISTS", "KEYS", "PTTL", "RANDOMKEY", "SORT", "TYPE", "BITCOUNT", "GETBIT", "GETRANGE", "MGET", "HEXISTS", "HGET", "HETALL", "HKEYS", "HLEN", "HVALS", "LINDEX", "LLEN", "LRANGE", "ZCARD", "ZRANGE", "ZRANK", "ZSCORE", "ZLEXCOUNT", "PFCOUNT", "GEOPOS", "GEODIST", "GEORADIUS", "GEORADIUSBYMEMBER", "GEOHASH"}
 
 func Cmdanalysis(cmd string) int {
 	result := In_array(cmd, readcmd)
@@ -86,7 +86,7 @@ func IP4ToInt(ip string) int {
 	return sum >> 8
 }
 func CheckError(err error) {
-        if err != nil {
-                panic(err)
-        }
+	if err != nil {
+		panic(err)
+	}
 }

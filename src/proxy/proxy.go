@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"time"
 )
 
 func Handle(sconn net.Conn, ip string, buf []byte) {
@@ -12,7 +13,7 @@ func Handle(sconn net.Conn, ip string, buf []byte) {
 		log.Printf("连接%v失败:%v\n", ip, err)
 		return
 	}
-	go func(sconn net.Conn, dconn net.Conn, buf []byte) {
+	func(sconn net.Conn, dconn net.Conn, buf []byte) {
 		_, write_err := dconn.Write(buf)
 		if write_err != nil {
 			log.Println("缓冲写入错误:%v",write_err)

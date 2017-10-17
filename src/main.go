@@ -7,7 +7,7 @@ import (
 	"loghandle"
 	"net"
 	"proxy"
-	"reflect"
+	//	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -20,10 +20,10 @@ var lock sync.Mutex
 
 func main() {
 	loghandle.Init("redisproxy.log")
-	log.SetPrefix("[info]")
+	log.SetPrefix("[info] ")
 	var confobj, err = config.Load("conf/default.json")
 	if err != nil {
-		log.SetPrefix("[error]")
+		log.SetPrefix("[error] ")
 		fmt.Println(err)
 		log.Println("配置文件读取错误")
 		return
@@ -35,14 +35,14 @@ func main() {
 	log.Println("Start tcp server....")
 	listener, err := net.Listen("tcp", confobj.Host+":"+strconv.Itoa(int(confobj.Port)))
 	if err != nil {
-		log.SetPrefix("[error]")
+		log.SetPrefix("[error] ")
 		log.Println("Error listening", err.Error())
 		return
 	}
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
-			log.SetPrefix("[error]")
+			log.SetPrefix("[error] ")
 			log.Println("Error accepting", err.Error())
 			return
 		}
@@ -58,17 +58,23 @@ func doServerStuff(conn net.Conn, confobj *config.Config) {
 		buf := make([]byte, 1024)
 		len, err := conn.Read(buf)
 		if err != nil {
-			fmt.Println("Error accepting", err.Error())
-			return
+			if err.Error() == "EOF" {
+				log.Println("客户端断开连接")
+				return
+			} else {
+				log.Println("Error accepting", err.Error())
+				return
+
+			}
 		}
-		log.Println(string(buf[:len]))
-		log.Println(reflect.TypeOf(buf[:len]))
+		//log.Println(string(buf[:len]))
+		//log.Println(reflect.TypeOf(buf[:len]))
 		cmd := strings.Split(string(buf[:len]), "\r\n")[2]
 		if cmd == "COMMAND" {
 			sayok(conn)
 		} else {
-			result := util.Cmdanalysis(strings.ToLower(cmd))
-			log.Println("cmd is ", result)
+			result := util.Cmdanalysis(strings.ToUpper(cmd))
+	//		log.Println("cmd is ", result)
 			if result == 1 {
 				ip := confobj.MasterHost + ":" + strconv.Itoa(int(confobj.MasterPort))
 				log.Println(ip)
