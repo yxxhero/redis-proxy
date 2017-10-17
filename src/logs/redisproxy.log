@@ -1,0 +1,136 @@
+2017/10/16 17:09:04 log.go:22: logfile exists
+[info]2017/10/16 17:09:04 config.go:36: success load config file: conf/default.json
+[info]2017/10/16 17:09:04 main.go:34: Start tcp server....
+2017/10/16 18:47:31 log.go:22: logfile exists
+[info]2017/10/16 18:47:31 config.go:36: success load config file: conf/default.json
+[info]2017/10/16 18:47:31 main.go:34: Start tcp server....
+[info]2017/10/16 18:58:54 main.go:69: cmd is  0
+[info]2017/10/16 18:58:54 main.go:72: write
+[info]2017/10/16 18:59:12 proxy.go:19: 往192.168.201.72:6380发送数据失败:<nil>
+[info]2017/10/16 18:59:12 proxy.go:24: 从192.168.201.72:6380接收数据失败:read tcp 192.168.201.72:6380->192.168.201.72:48560: read tcp 192.168.201.72:48561->192.168.201.72:6380: use of closed network connection
+2017/10/16 19:34:12 log.go:22: logfile exists
+[info]2017/10/16 19:34:12 config.go:36: success load config file: conf/default.json
+[info]2017/10/16 19:34:12 main.go:34: Start tcp server....
+[info]2017/10/16 19:35:06 main.go:69: cmd is  0
+[info]2017/10/16 19:35:06 main.go:72: write
+[info]2017/10/16 19:35:18 proxy.go:19: 往192.168.201.72:6380发送数据失败:<nil>
+[info]2017/10/16 19:35:18 proxy.go:24: 从192.168.201.72:6380接收数据失败:read tcp 192.168.201.72:6380->192.168.201.72:48562: read tcp 192.168.201.72:48563->192.168.201.72:6380: use of closed network connection
+2017/10/16 19:44:39 log.go:22: logfile exists
+[info]2017/10/16 19:44:39 config.go:36: success load config file: conf/default.json
+[info]2017/10/16 19:44:39 main.go:34: Start tcp server....
+[info]2017/10/16 19:45:24 main.go:69: cmd is  1
+[info]2017/10/16 19:45:24 main.go:76: read
+2017/10/16 19:47:04 log.go:22: logfile exists
+[info]2017/10/16 19:47:04 config.go:36: success load config file: conf/default.json
+[info]2017/10/16 19:47:04 main.go:34: Start tcp server....
+[info]2017/10/16 19:47:29 main.go:69: cmd is  1
+[info]2017/10/16 19:47:29 main.go:72: 192.168.201.72:6379
+2017/10/16 19:55:44 log.go:22: logfile exists
+[info]2017/10/16 19:55:44 config.go:36: success load config file: conf/default.json
+[info]2017/10/16 19:55:44 main.go:35: Start tcp server....
+[info]2017/10/16 19:55:49 main.go:64: *1
+$7
+COMMAND
+
+[info]2017/10/16 19:55:49 main.go:65: []uint8
+2017/10/17 14:10:51 log.go:22: logfile exists
+[info]2017/10/17 14:10:51 config.go:36: success load config file: conf/default.json
+[info]2017/10/17 14:10:51 main.go:35: Start tcp server....
+[info]2017/10/17 14:13:45 main.go:64: *1
+$7
+COMMAND
+
+[info]2017/10/17 14:13:45 main.go:65: []uint8
+[info]2017/10/17 14:14:00 main.go:64: *3
+$3
+set
+$4
+test
+$1
+1
+
+[info]2017/10/17 14:14:00 main.go:65: []uint8
+[info]2017/10/17 14:14:00 main.go:71: cmd is  1
+[info]2017/10/17 14:14:00 main.go:74: 192.168.201.72:6379
+[info]2017/10/17 14:14:00 proxy.go:19: write tcp 192.168.201.72:36547->192.168.201.72:6379: use of closed network connection
+[info]2017/10/17 14:14:00 proxy.go:23: read tcp 192.168.201.72:6380->192.168.201.72:45354: read tcp 192.168.201.72:36547->192.168.201.72:6379: use of closed network connection
+[info]2017/10/17 14:14:00 main.go:64: *3
+$3
+set
+$4
+test
+$1
+1
+
+[info]2017/10/17 14:14:00 main.go:65: []uint8
+[info]2017/10/17 14:14:00 main.go:71: cmd is  1
+[info]2017/10/17 14:14:00 main.go:74: 192.168.201.72:6379
+[info]2017/10/17 14:14:00 proxy.go:19: write tcp 192.168.201.72:36549->192.168.201.72:6379: use of closed network connection
+[info]2017/10/17 14:14:00 proxy.go:23: read tcp 192.168.201.72:6380->192.168.201.72:45356: read tcp 192.168.201.72:36549->192.168.201.72:6379: use of closed network connection
+2017/10/17 17:00:55 log.go:22: logfile exists
+[info]2017/10/17 17:00:55 config.go:36: success load config file: conf/default.json
+[info]2017/10/17 17:00:55 main.go:35: Start tcp server....
+[info]2017/10/17 17:02:19 main.go:64: *1
+$7
+COMMAND
+
+[info]2017/10/17 17:02:19 main.go:65: []uint8
+[info]2017/10/17 17:02:33 main.go:64: *3
+$3
+set
+$4
+test
+$1
+1
+
+[info]2017/10/17 17:02:33 main.go:65: []uint8
+[info]2017/10/17 17:02:33 main.go:71: cmd is  1
+[info]2017/10/17 17:02:33 main.go:74: 192.168.201.72:6379
+[info]2017/10/17 17:02:33 proxy.go:18: write tcp 192.168.201.72:36551->192.168.201.72:6379: use of closed network connection
+[info]2017/10/17 17:02:33 proxy.go:22: read tcp 192.168.201.72:6380->192.168.201.72:45358: read tcp 192.168.201.72:36551->192.168.201.72:6379: use of closed network connection
+2017/10/17 17:02:59 log.go:22: logfile exists
+[info]2017/10/17 17:02:59 config.go:36: success load config file: conf/default.json
+[info]2017/10/17 17:02:59 main.go:35: Start tcp server....
+[info]2017/10/17 17:03:06 main.go:64: *1
+$7
+COMMAND
+
+[info]2017/10/17 17:03:06 main.go:65: []uint8
+[info]2017/10/17 17:03:18 main.go:64: *3
+$3
+set
+$5
+tests
+$1
+1
+
+[info]2017/10/17 17:03:18 main.go:65: []uint8
+[info]2017/10/17 17:03:18 main.go:71: cmd is  1
+[info]2017/10/17 17:03:18 main.go:74: 192.168.201.72:6379
+[info]2017/10/17 17:03:40 main.go:64: *2
+$3
+get
+$5
+tests
+
+[info]2017/10/17 17:03:40 main.go:65: []uint8
+[info]2017/10/17 17:03:40 main.go:71: cmd is  0
+[info]2017/10/17 17:03:40 main.go:78: 192.168.111.72:9989
+[info]2017/10/17 17:04:43 proxy.go:12: 连接192.168.111.72:9989失败:dial tcp 192.168.111.72:9989: getsockopt: connection timed out
+2017/10/17 17:05:38 log.go:22: logfile exists
+[info]2017/10/17 17:05:38 config.go:36: success load config file: conf/default.json
+[info]2017/10/17 17:05:38 main.go:35: Start tcp server....
+[info]2017/10/17 17:05:49 main.go:64: *1
+$7
+COMMAND
+
+[info]2017/10/17 17:05:49 main.go:65: []uint8
+[info]2017/10/17 17:06:08 main.go:64: *2
+$3
+get
+$5
+tests
+
+[info]2017/10/17 17:06:08 main.go:65: []uint8
+[info]2017/10/17 17:06:08 main.go:71: cmd is  0
+[info]2017/10/17 17:06:08 main.go:78: 192.168.201.72:9989

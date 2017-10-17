@@ -1,0 +1,17 @@
+{
+  "service": "redis service",
+  "host": "192.168.201.72",
+  "port": 6380,
+  "webport": 7259,
+  "strategy": "poll",
+  "heartbeat": 60,
+  "maxprocessor": 1,
+  "masterhost": "192.168.201.72",
+  "masterport": 6379,
+  "backends": [
+    {
+      "host": "192.168.201.72",
+      "port": 9989 
+    }
+  ]
+}
