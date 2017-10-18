@@ -14,7 +14,7 @@ type Config struct {
 	WebPort      uint16              `json:"webport"`
 	Strategy     string              `json:"strategy"`
 	Heartbeat    int                 `json:"heartbeat"`
-	MaxProcessor int                 `json:"maxprocessor"`
+	MaxCointegration int                 `json:"maxcointegration"`
 	MasterHost   string              `json:"masterhost"`
 	MasterPort   uint16              `json:"masterport"`
 	Backends     []structure.Backend `json:"backends"`

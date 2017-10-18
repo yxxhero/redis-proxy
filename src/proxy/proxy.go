@@ -7,20 +7,24 @@ import (
 	"time"
 )
 
-func Handle(sconn net.Conn, ip string, buf []byte) {
+func Handle(sconn net.Conn, ip string, buf []byte, exitchanobj chan int) {
 	dconn, err := net.DialTimeout("tcp", ip, 2*time.Second)
+	defer dconn.Close()
 	if err != nil {
 		log.Printf("连接%v失败:%v\n", ip, err)
 		return
 	}
-	func(sconn net.Conn, dconn net.Conn, buf []byte) {
+	func(sconn net.Conn, dconn net.Conn, buf []byte, exitobj chan int) {
 		_, write_err := dconn.Write(buf)
 		if write_err != nil {
-			log.Println("缓冲写入错误:%v",write_err)
+			log.Println("缓冲写入错误:%v", write_err.Error())
+			return
 		}
 		_, copy_err := io.Copy(sconn, dconn)
 		if copy_err != nil {
-			log.Println("io复制错误:%v",copy_err)
+			log.Println("io复制错误:%v", copy_err.Error())
+			return
 		}
-	}(sconn, dconn, buf)
+		<-exitchanobj
+	}(sconn, dconn, buf, exitchanobj)
 }

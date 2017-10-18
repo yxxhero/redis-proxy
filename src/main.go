@@ -21,13 +21,16 @@ var lock sync.Mutex
 func main() {
 	loghandle.Init("redisproxy.log")
 	log.SetPrefix("[info] ")
-	var confobj, err = config.Load("conf/default.json")
+	var confobj, err = config.Load("../conf/default.json")
 	if err != nil {
 		log.SetPrefix("[error] ")
 		fmt.Println(err)
 		log.Println("配置文件读取错误")
 		return
 	}
+
+	max_cointegration := make(chan int, confobj.MaxCointegration)
+
 	for _, value := range confobj.Backends {
 		ipelement := value.Url()
 		trueList = append(trueList, ipelement)
@@ -46,13 +49,14 @@ func main() {
 			log.Println("Error accepting", err.Error())
 			return
 		}
-		go doServerStuff(conn, confobj)
+		max_cointegration <- 1
+		go doServerStuff(conn, confobj,max_cointegration)
 
 	}
 
 }
 
-func doServerStuff(conn net.Conn, confobj *config.Config) {
+func doServerStuff(conn net.Conn, confobj *config.Config, chanobj chan int) {
 	for {
 
 		buf := make([]byte, 1024)
@@ -74,15 +78,15 @@ func doServerStuff(conn net.Conn, confobj *config.Config) {
 			sayok(conn)
 		} else {
 			result := util.Cmdanalysis(strings.ToUpper(cmd))
-	//		log.Println("cmd is ", result)
+			//		log.Println("cmd is ", result)
 			if result == 1 {
 				ip := confobj.MasterHost + ":" + strconv.Itoa(int(confobj.MasterPort))
 				log.Println(ip)
-				go proxy.Handle(conn, ip, buf[:len])
+				go proxy.Handle(conn, ip, buf[:len], chanobj)
 			} else {
 				ip, _ := getIP()
 				log.Println(ip)
-				go proxy.Handle(conn, ip, buf[:len])
+				go proxy.Handle(conn, ip, buf[:len], chanobj)
 			}
 		}
 	}
