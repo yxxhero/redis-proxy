@@ -15,6 +15,7 @@ type Config struct {
 	Strategy     string              `json:"strategy"`
 	Heartbeat    int                 `json:"heartbeat"`
 	MaxCointegration int                 `json:"maxcointegration"`
+	MaxConnection int                 `json:"maxconnection"`
 	MasterHost   string              `json:"masterhost"`
 	MasterPort   uint16              `json:"masterport"`
 	Backends     []structure.Backend `json:"backends"`

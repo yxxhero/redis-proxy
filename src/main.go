@@ -7,7 +7,6 @@ import (
 	"loghandle"
 	"net"
 	"proxy"
-	//	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -28,8 +27,12 @@ func main() {
 		log.Println("配置文件读取错误")
 		return
 	}
-
-	max_cointegration := make(chan int, confobj.MaxCointegration)
+	var max_cointegration chan int 
+	var max_rconnection chan net.Conn 
+	var max_wconnection chan net.Conn 
+	max_cointegration = make(chan int, confobj.MaxCointegration)
+        max_rconnection = make(chan net.Conn,confobj.MaxConnection)
+        max_wconnection = make(chan net.Conn,confobj.MaxConnection)
 
 	for _, value := range confobj.Backends {
 		ipelement := value.Url()
@@ -49,48 +52,64 @@ func main() {
 			log.Println("Error accepting", err.Error())
 			return
 		}
-		max_cointegration <- 1
-		go doServerStuff(conn, confobj,max_cointegration)
+		//log.Println("waiting")
+		go doServerStuff(conn, confobj, max_cointegration,max_rconnection,max_wconnection)
 
 	}
 
 }
 
-func doServerStuff(conn net.Conn, confobj *config.Config, chanobj chan int) {
+func doServerStuff(conn net.Conn, confobj *config.Config, chanobj chan int,max_rconnchan chan net.Conn,max_wconnchan chan net.Conn) {
 	for {
+		totalinfo := []byte{}
+		for {
 
-		buf := make([]byte, 1024)
-		len, err := conn.Read(buf)
-		if err != nil {
-			if err.Error() == "EOF" {
-				log.Println("客户端断开连接")
-				return
+			buf := make([]byte, 1024)
+			len, err := conn.Read(buf)
+			if len == 1024 {
+				if err != nil {
+					if err.Error() == "EOF" {
+						log.Println("客户端断开连接")
+						return
+					} else {
+						log.Println("Error accepting", err.Error())
+						return
+
+					}
+				}
+				totalinfo = util.BytesCombine(totalinfo, buf[:len])
 			} else {
-				log.Println("Error accepting", err.Error())
-				return
+				if err != nil {
+					if err.Error() == "EOF" {
+						//log.Println("客户端断开连接")
+						return
+					} else {
+						log.Println("Error accepting", err.Error())
+						return
 
+					}
+				}
+				totalinfo = util.BytesCombine(totalinfo, buf[:len])
+
+				break
 			}
 		}
-		//log.Println(string(buf[:len]))
-		//log.Println(reflect.TypeOf(buf[:len]))
-		cmd := strings.Split(string(buf[:len]), "\r\n")[2]
+		cmd := strings.Split(string(totalinfo[:]), "\r\n")[2]
 		if cmd == "COMMAND" {
 			sayok(conn)
 		} else {
 			result := util.Cmdanalysis(strings.ToUpper(cmd))
-			//		log.Println("cmd is ", result)
 			if result == 1 {
 				ip := confobj.MasterHost + ":" + strconv.Itoa(int(confobj.MasterPort))
-				log.Println(ip)
-				go proxy.Handle(conn, ip, buf[:len], chanobj)
+				chanobj <- 1
+				go proxy.Handle(conn, ip, totalinfo[:], chanobj,max_wconnchan)
 			} else {
 				ip, _ := getIP()
-				log.Println(ip)
-				go proxy.Handle(conn, ip, buf[:len], chanobj)
+				chanobj <- 1
+				go proxy.Handle(conn, ip, totalinfo[:], chanobj,max_rconnchan)
 			}
 		}
 	}
-
 }
 
 func sayok(to net.Conn) {

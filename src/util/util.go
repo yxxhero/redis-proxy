@@ -1,10 +1,12 @@
 package util
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"io"
 	"log"
+	"net"
 	"path/filepath"
 	"reflect"
 	"strconv"
@@ -20,6 +22,9 @@ func Cmdanalysis(cmd string) int {
 	} else {
 		return 1
 	}
+}
+func BytesCombine(pBytes ...[]byte) []byte {
+	return bytes.Join(pBytes, []byte(""))
 }
 
 func In_array(element string, elementlist []string) bool {
@@ -49,6 +54,41 @@ func AbsolutePath(relpath string) string {
 
 func HomePath() string {
 	return AbsolutePath(".")
+}
+func Copy(sconn net.Conn, dconn net.Conn ,max_conn chan net.Conn) {
+	var written int64
+	buftem := make([]byte, 1024)
+	for {
+		nr, er := dconn.Read(buftem)
+		if nr == 1024 {
+			nw, ew := sconn.Write(buftem[0:nr])
+			if nw > 0 {
+				written += int64(nw)
+			}
+			if ew != nil {
+				break
+			}
+			if nr != nw {
+				break
+			}
+		} else {
+			nw, ew := sconn.Write(buftem[0:nr])
+			if ew != nil {
+				break
+			}
+			if nr != nw {
+				break
+			}
+			max_conn <- dconn
+			break
+		}
+		if er == io.EOF {
+			break
+		}
+		if er != nil {
+			break
+		}
+	}
 }
 
 func SliceIndex(slice interface{}, element interface{}) int {

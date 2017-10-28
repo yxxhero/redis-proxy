@@ -5,7 +5,8 @@
   "webport": 7259,
   "strategy": "poll",
   "heartbeat": 60,
-  "maxcointegration": 20,
+  "maxcointegration": 500,
+  "maxconnection": 500,
   "masterhost": "192.168.111.70",
   "masterport": 6379,
   "backends": [
